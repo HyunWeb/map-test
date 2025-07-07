@@ -33,7 +33,7 @@ function Login() {
         alert("이메일 또는 비밀번호가 일치하지 않습니다.");
       }
     } catch (err) {
-      console.error(err);
+      console.error("로그인 실패", err);
     }
     // const tempEmail = process.env.REACT_APP_TEMP_EMAIL;
     // const tempPassword = process.env.REACT_APP_TEMP_PASSWORD;
