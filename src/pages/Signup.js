@@ -1,14 +1,36 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { GetCompanies, PostSignup } from "../utils/api";
+import { hover } from "@testing-library/user-event/dist/hover";
+import Modal from "../components/Modal";
 
 function Signup() {
+  const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     confirmPassword: "",
     name: "",
-    organization: "",
+    organization: "0",
+    requireTerm: false,
   });
+  const [companies, setCompanies] = useState([]);
+
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [isModalOpen]);
+  useEffect(() => {
+    const fetchCompanies = async () => {
+      const response = await GetCompanies();
+      setCompanies(response);
+    };
+    fetchCompanies();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,13 +40,37 @@ function Signup() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
       alert("비밀번호가 일치하지 않습니다.");
       return;
     }
-    console.log("회원가입 시도:", formData);
+    if (formData.organization === "0") {
+      alert("소속을 선택해 주세요.");
+      return;
+    }
+    try {
+      const response = await PostSignup(
+        formData.email,
+        formData.password,
+        formData.name,
+        formData.organization,
+        formData.requireTerm
+      );
+      console.log(response);
+      if (response) {
+        alert("회원가입 성공");
+        navigate("/login");
+      }
+    } catch (err) {
+      console.error("회원가입 실패", err);
+    }
+    // if (formData.password !== formData.confirmPassword) {
+    //   alert("비밀번호가 일치하지 않습니다.");
+    //   return;
+    // }
+    // console.log("회원가입 시도:", formData);
   };
 
   return (
@@ -70,15 +116,40 @@ function Signup() {
                 style={styles.input}
                 required
               />
-              <input
-                type="text"
+              <select
                 name="organization"
                 value={formData.organization}
                 onChange={handleChange}
                 placeholder="소속"
                 style={styles.input}
                 required
-              />
+              >
+                <option value="0">소속을 선택해 주세요</option>
+                {companies?.map((company) => (
+                  <option key={company.id} value={company.id}>
+                    {company.name}
+                  </option>
+                ))}
+              </select>
+              <div style={styles.checkboxContainer}>
+                <span
+                  style={styles.checkboxText}
+                  onClick={() => {
+                    setIsModalOpen(true);
+                  }}
+                >
+                  개인정보 수집 및 이용 동의
+                </span>
+                <input
+                  type="checkbox"
+                  name="requireTerm"
+                  value={formData.requireTerm}
+                  onChange={handleChange}
+                  placeholder="약관 동의"
+                  required
+                  style={styles.checkbox}
+                />
+              </div>
               <button type="submit" style={styles.submitButton}>
                 회원가입
               </button>
@@ -92,6 +163,7 @@ function Signup() {
           </div>
         </div>
       </div>
+      {isModalOpen && <Modal setIsModalOpen={setIsModalOpen} />}
     </>
   );
 }
@@ -114,7 +186,6 @@ const styles = {
     maxWidth: "400px",
     borderRadius: "12px",
     padding: "2rem",
-    /*boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',*/
   },
   title: {
     fontSize: "1.5rem",
@@ -167,6 +238,22 @@ const styles = {
     textDecoration: "none",
     fontSize: "0.9rem",
     fontWeight: "600",
+  },
+  checkboxContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: "10px",
+    fontSize: "14px",
+  },
+  checkbox: {
+    width: "20px",
+    height: "20px",
+  },
+  checkboxText: {
+    cursor: "pointer",
+    fontWeight: "600",
+    textDecoration: "underline",
   },
 };
 
