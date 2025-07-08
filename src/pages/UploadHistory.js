@@ -15,6 +15,7 @@ function UploadHistory() {
   const [editingProject, setEditingProject] = useState(null);
   const [editDescription, setEditDescription] = useState("");
   const [editAuth, setEditAuth] = useState("");
+  const [originalList, setOriginalList] = useState([]);
   const [projectList, setProjectList] = useState([]);
 
   const handleCloseModal = () => {
@@ -26,6 +27,7 @@ function UploadHistory() {
   useEffect(() => {
     const fetchProjectList = async () => {
       const response = await GetProjectList();
+      setOriginalList(response);
       setProjectList(response);
       setSelectedItems(Array.from({ length: response.length }, () => false));
     };
@@ -34,11 +36,6 @@ function UploadHistory() {
 
   // 체크박스 상태 관리 함수
   const handleCheckboxChange = (id) => {
-    // if (selectedItems[id]) {
-    //   setSelectedItems({}); // 이미 선택된 경우 해제
-    // } else {
-    //   setSelectedItems({ [id]: true }); // 새로 선택
-    // }
     setSelectedItems((prev) => ({
       ...prev,
       [id]: !prev[id],
@@ -61,7 +58,6 @@ function UploadHistory() {
   };
 
   const handleEdit = (id) => {
-    console.log(id);
     setEditingProject(projectList[id - 1]);
     setEditDescription(projectList[id - 1].description);
     setEditAuth(projectList[id - 1].auth);
@@ -88,6 +84,21 @@ function UploadHistory() {
     handleCloseModal();
   };
 
+  const handleAuthChange = (e) => {
+    const selectedAuth = e.target.value;
+    if (selectedAuth === "all") {
+      setProjectList(originalList);
+    } else if (selectedAuth === "public") {
+      setProjectList(originalList.filter((item) => item.auth === "내부 공유"));
+    } else if (selectedAuth === "private") {
+      setProjectList(originalList.filter((item) => item.auth === "비공개"));
+    }
+  };
+
+  const handleSelectAll = () => {
+    setSelectedItems(selectedItems.map((item) => !item));
+  };
+
   return (
     <>
       <PageContainer
@@ -101,20 +112,6 @@ function UploadHistory() {
               <button style={styles.actionButton} onClick={handleAdd}>
                 추가
               </button>
-              {/* <button
-                style={styles.actionButton}
-                onClick={handleViewMap}
-                disabled={!selectedProject}
-              >
-                지도보기
-              </button>
-              <button
-                style={styles.actionButton}
-                onClick={handleEdit}
-                disabled={!selectedProject}
-              >
-                수정
-              </button> */}
               <button
                 style={styles.actionButton}
                 onClick={handleDelete}
@@ -122,13 +119,28 @@ function UploadHistory() {
               >
                 삭제
               </button>
+              <select style={styles.actionButton} onChange={handleAuthChange}>
+                <option value="all">모두 보기</option>
+                <option value="public">내부 공유</option>
+                <option value="private">비공개</option>
+              </select>
             </div>
           </header>
           <div style={styles.tableContainer}>
             <table style={styles.table}>
               <thead>
                 <tr>
-                  <th style={{ ...styles.th, ...styles.thFirst }}></th>
+                  <th style={{ ...styles.th, ...styles.thFirst }}>
+                    <input
+                      type="checkbox"
+                      checked={
+                        selectedItems.length === projectList.length &&
+                        selectedItems.every((item) => item)
+                      }
+                      onChange={handleSelectAll}
+                      style={styles.checkbox}
+                    />
+                  </th>
                   <th style={styles.th}>프로젝트명</th>
                   <th style={styles.th}>프로젝트 설명</th>
                   <th style={styles.th}>날짜</th>
@@ -143,8 +155,8 @@ function UploadHistory() {
                     <td style={styles.checkboxCell}>
                       <input
                         type="checkbox"
-                        checked={selectedItems[item.id] || false}
-                        onChange={() => handleCheckboxChange(item.id)}
+                        checked={selectedItems[item.id - 1] || false}
+                        onChange={() => handleCheckboxChange(item.id - 1)}
                         style={styles.checkbox}
                       />
                     </td>
@@ -238,6 +250,7 @@ const styles = {
   },
   th: {
     padding: "0.75rem 1rem",
+
     textAlign: "center",
     fontSize: "0.875rem",
     color: "#64748B",

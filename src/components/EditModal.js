@@ -17,7 +17,7 @@ export default function EditModal({
   };
 
   // 권한 옵션 목록
-  const authOptions = ["조직원만", "나만 보기"];
+  const authOptions = ["내부 공유", "비공개"];
   return (
     <div style={styles.modalOverlay}>
       <div style={styles.modalContainer}>

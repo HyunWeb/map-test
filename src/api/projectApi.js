@@ -15,7 +15,7 @@ export const GetProjectList = async () => {
       description: "데모용 전광판 hdmap 작업1",
       date: "2025/03/21",
       fileName: "32645787_20250321.pcd",
-      auth: "나만 보기",
+      auth: "비공개",
     },
     {
       id: 2,
@@ -23,7 +23,7 @@ export const GetProjectList = async () => {
       description: "데모용 전광판 hdmap 작업2",
       date: "2025/03/21",
       fileName: "32645787_20250321.pcd",
-      auth: "조직원만",
+      auth: "내부 공유",
     },
     {
       id: 3,
@@ -31,7 +31,7 @@ export const GetProjectList = async () => {
       description: "데모용 전광판 hdmap 작업3",
       date: "2025/03/21",
       fileName: "32645787_20250321.pcd",
-      auth: "나만 보기",
+      auth: "비공개",
     },
   ];
 };
