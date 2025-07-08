@@ -16,6 +16,7 @@ import GoogleMapView from "./pages/GoogleMapView";
 import PotreeViewer from "./pages/PotreeViewer";
 import { LoadScript } from "@react-google-maps/api";
 import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 function AppContent() {
   const location = useLocation();
@@ -49,6 +50,7 @@ function AppContent() {
         <Route path="/potree-viewer" element={<PotreeViewer />} />
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
     </div>
   );

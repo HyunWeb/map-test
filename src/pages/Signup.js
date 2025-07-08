@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { GetCompanies, PostSignup } from "../utils/api";
+import { GetCompanies, PostSignup } from "../api/userApi";
 import { hover } from "@testing-library/user-event/dist/hover";
 import Modal from "../components/Modal";
 

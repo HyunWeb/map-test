@@ -1,24 +1,4 @@
-import axios from "axios";
-
-const api = axios.create({
-  baseURL: process.env.REACT_APP_BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
-
-// 요청 인터셉터를 통해 매번 토큰을 동적으로 추가시킨다.
-api.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  // 두번째 인자 : 에러발생 시 처리
-  (error) => Promise.reject(error)
-);
+import api from "./index";
 
 // 회원가입
 export const PostSignup = async (
@@ -100,4 +80,39 @@ export const GetCompanies = async () => {
       createdAt: "2025-07-01T14:30:00",
     },
   ];
+};
+
+export const requestPasswordReset = async (email) => {
+  // try {
+  //   const response = await api.get(`/api/users/non/auth/password/${email}`);
+  //   return response.data;
+  // } catch (err) {
+  //   console.error(err);
+  //   throw err;
+  // }
+
+  return {
+    success: true,
+    message: "비밀번호 재설정 url이 이메일로 전송되었습니다",
+  };
+};
+
+// 비밀번호 재설정
+export const resetPassword = async (token, password) => {
+  // try {
+  //   const response = await api.post(`/api/users/auth/password`, {
+  //     token: token,
+  //     newPassword: password,
+  //   });
+  //   return response.data;
+  // } catch (err) {
+  //   console.error(err);
+  //   throw err;
+  // }
+
+  return {
+    success: true,
+    message: "비밀번호가 성공적으로 변경되었습니다",
+    updatedAt: "2025-06-27T11:30:00",
+  };
 };
