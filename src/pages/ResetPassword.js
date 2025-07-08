@@ -1,24 +1,20 @@
 import React, { useState } from "react";
-import { DiVim } from "react-icons/di";
-import { TbMapX } from "react-icons/tb";
 import { Link } from "react-router-dom";
-import { requestPasswordReset } from "../utils/api";
+import { resetPassword } from "../utils/api";
 
-export default function ForgotPassword() {
-  const [email, setEmail] = useState("");
+export default function ResetPassword() {
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const token = queryParams.get("token");
 
-  // 비밀번호 재설정 요청
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!email.length) {
-      alert("이메일이 입력되지 않았습니다.");
-    } else if (!email.includes("@")) {
-      alert("이메일 형식이 올바르지 않습니다.");
+    if (password !== confirmPassword) {
+      alert("비밀번호가 일치하지 않습니다.");
       return;
     }
-
     try {
-      const response = await requestPasswordReset(email);
+      const response = await resetPassword(token, password);
       if (response.success) {
         alert(response.message);
       } else {
@@ -28,20 +24,26 @@ export default function ForgotPassword() {
       console.error(err);
     }
   };
-
   return (
     <section style={styles.container}>
       <div style={styles.formContainer}>
-        <h2 style={styles.title}>비밀번호 찾기</h2>
+        <h2 style={styles.title}>비밀번호 재설정</h2>
         <input
-          type="email"
-          placeholder="이메일"
+          type="password"
+          placeholder="새 비밀번호 입력"
           style={styles.input}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="비밀번호 재확인"
+          style={styles.input}
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
         />
         <button style={styles.button} onClick={handleSubmit}>
-          재설정 메일 발송
+          비밀번호 재설정
         </button>
         <div style={styles.links}>
           <span style={styles.text}>이미 계정이 있으신가요?</span>

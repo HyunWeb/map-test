@@ -101,3 +101,38 @@ export const GetCompanies = async () => {
     },
   ];
 };
+
+export const requestPasswordReset = async (email) => {
+  // try {
+  //   const response = await api.get(`/api/users/non/auth/password/${email}`);
+  //   return response.data;
+  // } catch (err) {
+  //   console.error(err);
+  //   throw err;
+  // }
+
+  return {
+    success: true,
+    message: "비밀번호 재설정 url이 이메일로 전송되었습니다",
+  };
+};
+
+// 비밀번호 재설정
+export const resetPassword = async (token, password) => {
+  // try {
+  //   const response = await api.post(`/api/users/auth/password`, {
+  //     token: token,
+  //     newPassword: password,
+  //   });
+  //   return response.data;
+  // } catch (err) {
+  //   console.error(err);
+  //   throw err;
+  // }
+
+  return {
+    success: true,
+    message: "비밀번호가 성공적으로 변경되었습니다",
+    updatedAt: "2025-06-27T11:30:00",
+  };
+};
