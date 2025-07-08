@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 export default function EditModal({
+  isModalOpen,
   setIsModalOpen,
   setEditingProject,
   editDescription,
@@ -10,6 +11,16 @@ export default function EditModal({
   handleSaveEdit,
   editingProject,
 }) {
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        handleCloseModal();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isModalOpen]);
+
   // 모달 닫기
   const handleCloseModal = () => {
     setIsModalOpen(false);

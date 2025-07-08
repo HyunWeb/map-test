@@ -109,17 +109,25 @@ function UploadHistory() {
           <header style={styles.tableHeader}>
             <h3 style={styles.tableTitle}>업로드 내역</h3>
             <div style={styles.actionButtonsContainer}>
-              <button style={styles.actionButton} onClick={handleAdd}>
+              <button
+                style={styles.actionButton}
+                onClick={handleAdd}
+                tabIndex="0"
+              >
                 추가
               </button>
               <button
                 style={styles.actionButton}
                 onClick={handleDelete}
-                disabled={!selectedProject}
+                tabIndex="0"
               >
                 삭제
               </button>
-              <select style={styles.actionButton} onChange={handleAuthChange}>
+              <select
+                style={styles.actionButton}
+                onChange={handleAuthChange}
+                tabIndex="0"
+              >
                 <option value="all">모두 보기</option>
                 <option value="public">내부 공유</option>
                 <option value="private">비공개</option>
@@ -163,6 +171,12 @@ function UploadHistory() {
                     <td
                       style={styles.LinkTd}
                       onClick={() => handleViewMap(item.id)}
+                      tabIndex={0}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          handleViewMap(item.id);
+                        }
+                      }}
                     >
                       {item.projectName}
                     </td>
@@ -195,6 +209,7 @@ function UploadHistory() {
           {/* 수정 모달 */}
           {isModalOpen && editingProject && (
             <EditModal
+              isModalOpen={isModalOpen}
               setIsModalOpen={setIsModalOpen}
               setEditingProject={setEditingProject}
               editDescription={editDescription}
@@ -321,7 +336,6 @@ const styles = {
     cursor: "pointer",
     transition: "all 0.2s",
     opacity: 1,
-    outline: "none",
     boxShadow: "0 1px 2px rgba(0,0,0,0.05)",
     ":hover": {
       backgroundColor: "#F8FAFC",
