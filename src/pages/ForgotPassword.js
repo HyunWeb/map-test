@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { DiVim } from "react-icons/di";
 import { TbMapX } from "react-icons/tb";
-import { Link } from "react-router-dom";
-import { requestPasswordReset } from "../utils/api";
+import { Link, useNavigate } from "react-router-dom";
+import { requestPasswordReset } from "../api/userApi";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
+  const navigate = useNavigate();
 
   // 비밀번호 재설정 요청
   const handleSubmit = async (e) => {
@@ -21,6 +22,7 @@ export default function ForgotPassword() {
       const response = await requestPasswordReset(email);
       if (response.success) {
         alert(response.message);
+        navigate("/login");
       } else {
         alert(response.message);
       }

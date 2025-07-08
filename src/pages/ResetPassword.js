@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { resetPassword } from "../utils/api";
+import { resetPassword } from "../api/userApi";
 
 export default function ResetPassword() {
   const [password, setPassword] = useState("");
