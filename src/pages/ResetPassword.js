@@ -5,6 +5,7 @@ import { resetPassword } from "../utils/api";
 export default function ResetPassword() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const queryParams = new URLSearchParams(window.location.search);
   const token = queryParams.get("token");
 
   const handleSubmit = async (e) => {
