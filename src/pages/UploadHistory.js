@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import PageContainer from "../components/PageContainer";
 import { useNavigate } from "react-router-dom";
-import { GetProjectList } from "../api/projectApi";
+import { DeleteProject, GetProjectList } from "../api/projectApi";
 import EditModal from "../components/EditModal";
 
 function UploadHistory() {
@@ -18,17 +18,12 @@ function UploadHistory() {
   const [originalList, setOriginalList] = useState([]);
   const [projectList, setProjectList] = useState([]);
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setEditingProject(null);
-  };
-
   // 프로젝트 목록 조회
   useEffect(() => {
     const fetchProjectList = async () => {
       const response = await GetProjectList();
-      setOriginalList(response);
-      setProjectList(response);
+      setOriginalList(response); // 원본 리스트
+      setProjectList(response); // 필터링용 리스트
       setSelectedItems(Array.from({ length: response.length }, () => false));
     };
     fetchProjectList();
@@ -36,10 +31,9 @@ function UploadHistory() {
 
   // 체크박스 상태 관리 함수
   const handleCheckboxChange = (id) => {
-    setSelectedItems((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
+    const newSelectedItems = [...selectedItems];
+    newSelectedItems[id] = !newSelectedItems[id];
+    setSelectedItems(newSelectedItems);
   };
 
   // 선택된 프로젝트 id 추출
@@ -66,22 +60,16 @@ function UploadHistory() {
     }
   };
 
-  const handleDelete = () => {
-    if (selectedProject) {
-      // 실제 삭제 로직은 백엔드 연동 필요
-      alert(`프로젝트(id: ${selectedProject.id})를 삭제합니다.`);
-    }
-  };
+  const handleDelete = async () => {
+    const deleteList = [];
+    console.log(selectedItems);
+    selectedItems.forEach((item, idx) => {
+      if (item === true) {
+        deleteList.push(projectList[idx].id);
+      }
+    });
 
-  // 수정 저장
-  const handleSaveEdit = () => {
-    // 실제 서비스에서는 API 호출로 저장
-    // 이 예시에서는 로컬 데이터만 업데이트
-
-    // 실제 구현 시 여기서 API 호출
-
-    alert("수정이 저장되었습니다.");
-    handleCloseModal();
+    await DeleteProject(deleteList);
   };
 
   const handleAuthChange = (e) => {
@@ -216,8 +204,6 @@ function UploadHistory() {
               setEditDescription={setEditDescription}
               editAuth={editAuth}
               setEditAuth={setEditAuth}
-              handleSaveEdit={handleSaveEdit}
-              handleCloseModal={handleCloseModal}
               editingProject={editingProject}
             />
           )}

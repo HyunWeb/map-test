@@ -8,7 +8,6 @@ export default function EditModal({
   setEditDescription,
   editAuth,
   setEditAuth,
-  handleSaveEdit,
   editingProject,
 }) {
   useEffect(() => {
@@ -27,6 +26,17 @@ export default function EditModal({
     setEditingProject(null);
   };
 
+  // 수정 저장
+  const handleSaveEdit = () => {
+    // 실제 서비스에서는 API 호출로 저장
+    // 이 예시에서는 로컬 데이터만 업데이트
+
+    // 실제 구현 시 여기서 API 호출
+
+    alert("수정이 저장되었습니다.");
+    handleCloseModal();
+  };
+
   // 권한 옵션 목록
   const authOptions = ["내부 공유", "비공개"];
   return (
@@ -35,7 +45,16 @@ export default function EditModal({
         <div style={styles.modalHeader}>
           <h3 style={styles.modalTitle}>프로젝트 정보 수정</h3>
           <button style={styles.closeButton} onClick={handleCloseModal}>
-            ×
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              className="bi bi-x-lg"
+              viewBox="0 0 16 16"
+            >
+              <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+            </svg>
           </button>
         </div>
         <div style={styles.modalBody}>
@@ -44,10 +63,9 @@ export default function EditModal({
             <input
               type="text"
               value={editingProject.projectName}
-              readOnly
+              onChange={(e) => setEditingProject(e.target.value)}
               style={{
                 ...styles.formControl,
-                backgroundColor: "#f1f5f9",
               }}
             />
           </div>
@@ -68,6 +86,7 @@ export default function EditModal({
               style={{
                 ...styles.formControl,
                 backgroundColor: "#f1f5f9",
+                color: "#a3a3a3",
               }}
             />
           </div>
