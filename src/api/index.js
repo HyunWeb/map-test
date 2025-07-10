@@ -6,6 +6,7 @@ const api = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
+  withCredentials: true,
 });
 
 // 요청 인터셉터를 통해 매번 토큰을 동적으로 추가시킨다.

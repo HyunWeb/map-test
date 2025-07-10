@@ -1,10 +1,12 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useUserStore } from "../store/userStore";
 
 function Header() {
   const { isLoggedIn, logout } = useAuth();
   const navigate = useNavigate();
+  const { user, setUser } = useUserStore();
 
   const handleLogout = () => {
     logout();
@@ -34,6 +36,14 @@ function Header() {
                 <Link to="/history" style={styles.link}>
                   업로드 내역
                 </Link>
+                <Link to="/upload-center" style={styles.link}>
+                  자료실
+                </Link>
+                {user === "admin" && (
+                  <Link to="/admin" style={styles.link}>
+                    관리자
+                  </Link>
+                )}
                 <button onClick={handleLogout} style={styles.logoutButton}>
                   로그아웃
                 </button>
