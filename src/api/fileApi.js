@@ -62,3 +62,30 @@ export const CompleteFileUpload = async (fileId) => {
     console.error("파일 업로드 완료 에러", err);
   }
 };
+
+export const GetFileList = async () => {
+  try {
+    // const response = await api.get("/api/files/list");
+    // return response.data;
+
+    return [
+      {
+        id: 1,
+        location:
+          "서울특별시 강남구 역삼동 123-45 6층 101호 서울특별시 강남구 역삼동 123-45 6층 101호",
+        uploader: "홍길동",
+        createdAt: "2025-01-01",
+        download: "다운로드",
+      },
+      {
+        id: 2,
+        location: "대전",
+        uploader: "김길동",
+        createdAt: "2025-01-01",
+        download: "다운로드",
+      },
+    ];
+  } catch (err) {
+    console.error("파일 목록 조회 에러", err);
+  }
+};

@@ -18,6 +18,8 @@ import { LoadScript } from "@react-google-maps/api";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import DataCleaning from "./pages/DataCleaning";
+import UploadCenter from "./pages/UploadCenter";
+import AdminPage from "./pages/AdminPage/AdminPage";
 
 function AppContent() {
   const location = useLocation();
@@ -53,6 +55,8 @@ function AppContent() {
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/upload-center" element={<UploadCenter />} />
+        <Route path="/admin" element={<AdminPage />} />
       </Routes>
     </div>
   );
