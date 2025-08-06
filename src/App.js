@@ -14,6 +14,7 @@ import Signup from "./pages/Signup";
 import { AuthProvider } from "./context/AuthContext";
 import GoogleMapView from "./pages/GoogleMapView";
 import PotreeViewer from "./pages/PotreeViewer";
+import SimplePotreeTest from "./pages/SimplePotreeTest";
 import { LoadScript } from "@react-google-maps/api";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
@@ -26,7 +27,8 @@ function AppContent() {
   const isMapPage =
     location.pathname === "/map" ||
     location.pathname === "/google-map" ||
-    location.pathname === "/potree-viewer";
+    location.pathname === "/potree-viewer" ||
+    location.pathname === "/simple-potree-test";
 
   return isMapPage ? (
     <>
@@ -34,6 +36,7 @@ function AppContent() {
       <Routes>
         <Route path="/google-map" element={<GoogleMapView />} />
         <Route path="/potree-viewer" element={<PotreeViewer />} />
+        <Route path="/simple-potree-test" element={<SimplePotreeTest />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/upload" element={<FileUpload />} />

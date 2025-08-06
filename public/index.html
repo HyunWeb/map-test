@@ -24,58 +24,67 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <link rel="stylesheet" href="%PUBLIC_URL%/potree/libs/potree/potree.css" />
-    <script src="%PUBLIC_URL%/potree/libs/proj4/proj4.js"></script>
-    <script>
-      // proj4가 window에 등록되지 않은 경우 강제로 등록
-      if (typeof window.proj4 === "undefined" && typeof proj4 !== "undefined") {
-        window.proj4 = proj4;
-      }
-    </script>
-    <script src="%PUBLIC_URL%/potree/libs/jquery/jquery-3.1.1.js"></script>
-    <script src="%PUBLIC_URL%/potree/libs/three.js/build/three.js"></script>
-    <!-- three.js extra lines support (window.THREE에 안전하게 등록) -->
-    <script>
-      // LineSegmentsGeometry
-      document.write(
-        '<script src="' +
-          window.location.origin +
-          '/potree/libs/three.js/extra/lines/LineSegmentsGeometry.js"><\/script>'
-      );
-      // LineSegments2
-      document.write(
-        '<script src="' +
-          window.location.origin +
-          '/potree/libs/three.js/extra/lines/LineSegments2.js"><\/script>'
-      );
-      // LineGeometry
-      document.write(
-        '<script src="' +
-          window.location.origin +
-          '/potree/libs/three.js/extra/lines/LineGeometry.js"><\/script>'
-      );
-      // LineMaterial
-      document.write(
-        '<script src="' +
-          window.location.origin +
-          '/potree/libs/three.js/extra/lines/LineMaterial.js"><\/script>'
-      );
-      // Line2
-      document.write(
-        '<script src="' +
-          window.location.origin +
-          '/potree/libs/three.js/extra/lines/Line2.js"><\/script>'
-      );
-    </script>
-    <script src="%PUBLIC_URL%/potree/libs/other/BinaryHeap.js"></script>
-    <script src="%PUBLIC_URL%/potree/libs/tween/Tween.js"></script>
-    <script src="%PUBLIC_URL%/potree/libs/potree/potree.js"></script>
-    <!-- Leaflet for Potree Overview Map -->
+    <!-- Potree CSS -->
+    <link rel="stylesheet" href="%PUBLIC_URL%/potree/potree.css" />
     <link
       rel="stylesheet"
-      href="%PUBLIC_URL%/potree/libs/leaflet/leaflet.css"
+      href="%PUBLIC_URL%/libs/jquery-ui/jquery-ui.min.css"
     />
-    <script src="%PUBLIC_URL%/potree/libs/leaflet/leaflet.js"></script>
+    <link rel="stylesheet" href="%PUBLIC_URL%/libs/openlayers3/ol.css" />
+    <link rel="stylesheet" href="%PUBLIC_URL%/libs/spectrum/spectrum.css" />
+    <link
+      rel="stylesheet"
+      href="%PUBLIC_URL%/libs/jstree/themes/mixed/style.css"
+    />
+
+    <!-- Potree JavaScript Dependencies -->
+    <script src="%PUBLIC_URL%/libs/jquery/jquery-3.1.1.min.js"></script>
+    <script src="%PUBLIC_URL%/libs/spectrum/spectrum.js"></script>
+    <script src="%PUBLIC_URL%/libs/jquery-ui/jquery-ui.min.js"></script>
+    <script src="%PUBLIC_URL%/libs/other/BinaryHeap.js"></script>
+    <script src="%PUBLIC_URL%/libs/tween/tween.min.js"></script>
+    <script src="%PUBLIC_URL%/libs/d3/d3.js"></script>
+    <script src="%PUBLIC_URL%/libs/proj4/proj4.js"></script>
+    <script src="%PUBLIC_URL%/libs/openlayers3/ol.js"></script>
+    <script src="%PUBLIC_URL%/libs/i18next/i18next.js"></script>
+    <script src="%PUBLIC_URL%/libs/jstree/jstree.js"></script>
+    <script src="%PUBLIC_URL%/potree/potree.js"></script>
+    <script src="%PUBLIC_URL%/libs/plasio/js/laslaz.js"></script>
+
+    <!-- Three.js -->
+    <script src="%PUBLIC_URL%/libs/three.js/build/three.js"></script>
+    <script>
+      // Three.js extra lines support
+      document.write(
+        '<script src="' +
+          window.location.origin +
+          '/libs/three.js/extra/lines/LineSegmentsGeometry.js"><\/script>'
+      );
+      document.write(
+        '<script src="' +
+          window.location.origin +
+          '/libs/three.js/extra/lines/LineSegments2.js"><\/script>'
+      );
+      document.write(
+        '<script src="' +
+          window.location.origin +
+          '/libs/three.js/extra/lines/LineGeometry.js"><\/script>'
+      );
+      document.write(
+        '<script src="' +
+          window.location.origin +
+          '/libs/three.js/extra/lines/LineMaterial.js"><\/script>'
+      );
+      document.write(
+        '<script src="' +
+          window.location.origin +
+          '/libs/three.js/extra/lines/Line2.js"><\/script>'
+      );
+    </script>
+
+    <!-- Leaflet for Potree Overview Map -->
+    <link rel="stylesheet" href="%PUBLIC_URL%/libs/leaflet/leaflet.css" />
+    <script src="%PUBLIC_URL%/libs/leaflet/leaflet.js"></script>
     <title>자율 농작업 3D 경로 생성 지원 서비스</title>
   </head>
   <body>
